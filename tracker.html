@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10141d">
+  <title>Git & GitHub — 5-Day Roadmap</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0e14;
+      --surface: #121824;
+      --surface-2: #182131;
+      --surface-3: #202b3d;
+      --text: #edf2f8;
+      --muted: #9aa8ba;
+      --line: #283549;
+      --accent: #8bd5ca;
+      --accent-2: #b8a5ff;
+      --good: #9be2b4;
+      --warning: #f2ce85;
+      --radius: 18px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 8% -10%, rgba(139,213,202,.12), transparent 38rem),
+        radial-gradient(ellipse at 100% 0%, rgba(184,165,255,.10), transparent 34rem),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    button, a { font: inherit; }
+    .wrap { width: min(1020px, calc(100% - 36px)); margin: 0 auto; padding: 54px 0 72px; }
+    .eyebrow { color: var(--accent); font-size: .76rem; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { max-width: 720px; margin: 12px 0 12px; font-size: clamp(2.3rem, 6vw, 4.4rem); line-height: 1.02; letter-spacing: -.055em; }
+    .lede { max-width: 680px; color: var(--muted); font-size: 1.04rem; margin: 0; }
+    .hero { padding-bottom: 30px; }
+    .hero strong { color: var(--text); font-weight: 650; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 28px; }
+    .stat { padding: 16px 18px; border: 1px solid var(--line); border-radius: 14px; background: rgba(18,24,36,.78); }
+    .stat-value { display: block; font-size: 1.55rem; font-weight: 750; letter-spacing: -.04em; }
+    .stat-label { color: var(--muted); font-size: .82rem; }
+    .progress-panel { margin: 18px 0 28px; padding: 19px 20px; background: rgba(18,24,36,.88); border: 1px solid var(--line); border-radius: var(--radius); }
+    .progress-top { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 11px; }
+    .progress-top strong { font-size: .95rem; }
+    #progressText { color: var(--accent); font-variant-numeric: tabular-nums; font-weight: 750; }
+    .track { height: 10px; background: #263246; border-radius: 99px; overflow: hidden; }
+    #progressBar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: inherit; transition: width .2s ease; }
+    .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 16px; }
+    .toolbar-note { color: var(--muted); font-size: .84rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn { border: 1px solid var(--line); background: var(--surface-2); color: var(--text); border-radius: 10px; padding: 8px 12px; cursor: pointer; font-size: .82rem; transition: border-color .15s, transform .15s, background .15s; }
+    .btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .btn.primary { background: var(--accent); color: #0b1518; border-color: var(--accent); font-weight: 750; }
+    .day { margin: 14px 0; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(18,24,36,.88); overflow: hidden; }
+    .day-head { display: flex; align-items: center; gap: 15px; padding: 19px 21px; border-bottom: 1px solid var(--line); }
+    .day-no { display: grid; place-items: center; flex: 0 0 42px; height: 42px; border-radius: 13px; color: #0b1518; background: var(--accent); font-weight: 850; }
+    .day:nth-of-type(2n) .day-no { background: var(--accent-2); }
+    .day-title { flex: 1; min-width: 0; }
+    .day-title h2 { margin: 0; font-size: 1.1rem; letter-spacing: -.02em; }
+    .day-title p { margin: 3px 0 0; color: var(--muted); font-size: .84rem; }
+    .day-count { color: var(--muted); white-space: nowrap; font-size: .8rem; font-variant-numeric: tabular-nums; }
+    .tasks { padding: 5px 21px 8px; }
+    .task { display: grid; grid-template-columns: 22px minmax(0,1fr) auto; align-items: start; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(40,53,73,.72); cursor: pointer; }
+    .task:last-child { border-bottom: 0; }
+    .task input { appearance: none; width: 19px; height: 19px; border: 1.5px solid #60718a; border-radius: 6px; margin: 3px 0 0; cursor: pointer; background: #101722; display: grid; place-content: center; }
+    .task input::after { content: ""; width: 9px; height: 5px; border-left: 2px solid #0b1518; border-bottom: 2px solid #0b1518; transform: rotate(-45deg) scale(0); transition: transform .12s ease; margin-top: -2px; }
+    .task input:checked { background: var(--accent); border-color: var(--accent); }
+    .task input:checked::after { transform: rotate(-45deg) scale(1); }
+    .task input:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; }
+    .task-copy { min-width: 0; }
+    .task-copy strong { display: block; font-size: .92rem; font-weight: 650; }
+    .task-copy span { display: block; color: var(--muted); font-size: .84rem; margin-top: 3px; }
+    .task-time { color: #8d9cb1; font-size: .75rem; white-space: nowrap; padding-top: 3px; font-variant-numeric: tabular-nums; }
+    .task.done .task-copy strong { color: #a4b2c2; text-decoration: line-through; text-decoration-color: #60718a; }
+    .deliverable { margin: 0 21px 19px; padding: 13px 15px; border: 1px solid rgba(139,213,202,.22); border-radius: 12px; background: rgba(139,213,202,.055); color: #c8d7dc; font-size: .85rem; }
+    .deliverable strong { color: var(--accent); }
+    .callout { margin: 22px 0 0; padding: 17px 19px; border: 1px solid rgba(242,206,133,.24); border-radius: 14px; background: rgba(242,206,133,.055); color: #d2c7aa; font-size: .87rem; }
+    .callout strong { color: var(--warning); }
+    footer { padding-top: 27px; color: var(--muted); font-size: .8rem; text-align: center; }
+    @media (max-width: 620px) {
+      .wrap { width: min(100% - 24px, 1020px); padding-top: 34px; }
+      .stats { gap: 8px; }
+      .stat { padding: 12px; }
+      .stat-value { font-size: 1.25rem; }
+      .stat-label { font-size: .72rem; }
+      .day-head { padding: 15px; gap: 11px; }
+      .tasks { padding-left: 15px; padding-right: 15px; }
+      .deliverable { margin-left: 15px; margin-right: 15px; }
+      .day-count { font-size: .72rem; }
+      .task { grid-template-columns: 22px minmax(0,1fr); gap: 9px; }
+      .task-time { grid-column: 2; padding-top: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <div class="eyebrow">A practical learning sprint · 10 hours total</div>
+      <h1>Git &amp; GitHub<br>in 5 days.</h1>
+      <p class="lede">Two focused hours a day. Every session follows <strong>learn this → do this</strong>, so you finish with a real repository, merged pull requests, and a tagged release.</p>
+      <div class="stats" aria-label="Roadmap summary">
+        <div class="stat"><span class="stat-value">05</span><span class="stat-label">Days</span></div>
+        <div class="stat"><span class="stat-value">02h</span><span class="stat-label">Per day</span></div>
+        <div class="stat"><span class="stat-value" id="completedStat">0 / 30</span><span class="stat-label">Tasks completed</span></div>
+      </div>
+    </header>
+
+    <section class="progress-panel" aria-label="Overall progress">
+      <div class="progress-top"><strong>Your learning progress</strong><span id="progressText">0%</span></div>
+      <div class="track" role="progressbar" aria-label="Roadmap completion" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><div id="progressBar"></div></div>
+    </section>
+
+    <div class="toolbar">
+      <div class="toolbar-note">Your checkmarks save automatically in this browser.</div>
+      <div class="actions">
+        <button class="btn" id="exportBtn" type="button">Export progress</button>
+        <button class="btn" id="resetBtn" type="button">Reset checklist</button>
+      </div>
+    </div>
+
+    <section class="day" data-day="1">
+      <div class="day-head"><div class="day-no">01</div><div class="day-title"><h2>Git foundations &amp; first push</h2><p>Understand Git's workflow and publish your first repository.</p></div><div class="day-count">0 / 6</div></div>
+      <div class="tasks">
+        <label class="task"><input type="checkbox" data-id="d1t1"><span class="task-copy"><strong>Git vs GitHub; repository, working tree, staging area, commit</strong><span>Learn the mental model. Check <code>git --version</code> and configure your Git name and email.</span></span><span class="task-time">00–20 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d1t2"><span class="task-copy"><strong><code>init</code>, <code>status</code>, <code>add</code>, <code>commit</code></strong><span>Create a repository, add a README, stage it, and make your first commit.</span></span><span class="task-time">20–45 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d1t3"><span class="task-copy"><strong><code>diff</code>, <code>diff --staged</code>, <code>log</code>, <code>show</code></strong><span>Edit the README, inspect both kinds of changes, commit, and inspect history.</span></span><span class="task-time">45–65 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d1t4"><span class="task-copy"><strong><code>.gitignore</code> and tracked vs untracked files</strong><span>Ignore generated files such as <code>*.log</code> and <code>node_modules/</code>; check <code>git status</code>.</span></span><span class="task-time">65–85 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d1t5"><span class="task-copy"><strong>Remote repositories and <code>push</code></strong><span>Create a GitHub repository, add <code>origin</code>, then run <code>git push -u origin main</code>.</span></span><span class="task-time">85–105 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d1t6"><span class="task-copy"><strong>Review from memory</strong><span>Explain <code>status → add → commit → push</code>; check your status and one-line history.</span></span><span class="task-time">105–120 min</span></label>
+      </div>
+      <div class="deliverable"><strong>Deliverable:</strong> A GitHub repository with a useful README, a <code>.gitignore</code>, and at least three commits.</div>
+    </section>
+
+    <section class="day" data-day="2">
+      <div class="day-head"><div class="day-no">02</div><div class="day-title"><h2>Branches, merges &amp; conflicts</h2><p>Build features away from main and combine changes safely.</p></div><div class="day-count">0 / 5</div></div>
+      <div class="tasks">
+        <label class="task"><input type="checkbox" data-id="d2t1"><span class="task-copy"><strong>Branches; <code>branch</code> and <code>switch</code></strong><span>Create a <code>feature/profile</code> branch and switch to it.</span></span><span class="task-time">00–20 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d2t2"><span class="task-copy"><strong>Feature-branch workflow</strong><span>Add a profile section or file on your feature branch and make two small commits.</span></span><span class="task-time">20–45 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d2t3"><span class="task-copy"><strong><code>merge</code> and fast-forward merges</strong><span>Switch to <code>main</code>, merge the feature branch, and inspect the history.</span></span><span class="task-time">45–65 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d2t4"><span class="task-copy"><strong>Merge conflicts and conflict markers</strong><span>Edit the same line on two branches, merge them, resolve the conflict, stage, and commit.</span></span><span class="task-time">65–95 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d2t5"><span class="task-copy"><strong>Branch cleanup and history graph</strong><span>Delete the merged branch and inspect <code>git log --oneline --graph --all</code>.</span></span><span class="task-time">95–120 min</span></label>
+      </div>
+      <div class="deliverable"><strong>Deliverable:</strong> A merged feature and a conflict-resolution commit visible in your history.</div>
+    </section>
+
+    <section class="day" data-day="3">
+      <div class="day-head"><div class="day-no">03</div><div class="day-title"><h2>GitHub collaboration: Issues &amp; PRs</h2><p>Use GitHub to plan, review, and merge changes.</p></div><div class="day-count">0 / 6</div></div>
+      <div class="tasks">
+        <label class="task"><input type="checkbox" data-id="d3t1"><span class="task-copy"><strong>GitHub repository pages; <code>clone</code> and remotes</strong><span>Clone your repository into a second folder and inspect <code>git remote -v</code>.</span></span><span class="task-time">00–20 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d3t2"><span class="task-copy"><strong>Issues, labels, and acceptance criteria</strong><span>Open an Issue for one small improvement and describe what done means.</span></span><span class="task-time">20–40 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d3t3"><span class="task-copy"><strong>Issue-linked branches and commits</strong><span>Create <code>feature/...</code>, make the change, and reference the Issue.</span></span><span class="task-time">40–60 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d3t4"><span class="task-copy"><strong>Pull Requests: base, compare, review, merge</strong><span>Push the branch and open a PR with the change, reason, and test steps.</span></span><span class="task-time">60–85 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d3t5"><span class="task-copy"><strong>Reviewing changes</strong><span>Inspect Files changed, leave a review comment, make a follow-up commit, and check the updated PR.</span></span><span class="task-time">85–105 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d3t6"><span class="task-copy"><strong>Merge and synchronize</strong><span>Merge the PR, pull the updated <code>main</code>, and clean up the remote branch.</span></span><span class="task-time">105–120 min</span></label>
+      </div>
+      <div class="deliverable"><strong>Deliverable:</strong> One closed Issue and one merged Pull Request linked to it.</div>
+    </section>
+
+    <section class="day" data-day="4">
+      <div class="day-head"><div class="day-no">04</div><div class="day-title"><h2>Syncing, undoing &amp; recovery</h2><p>Recover from common mistakes without losing work.</p></div><div class="day-count">0 / 6</div></div>
+      <div class="tasks">
+        <label class="task"><input type="checkbox" data-id="d4t1"><span class="task-copy"><strong><code>fetch</code> vs <code>pull</code>; remote-tracking branches</strong><span>Fetch changes, inspect history and status, then pull when ready to integrate.</span></span><span class="task-time">00–20 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d4t2"><span class="task-copy"><strong>Push rejection and synchronization</strong><span>Edit a file on GitHub, attempt a push from a stale local branch, then synchronize and push.</span></span><span class="task-time">20–40 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d4t3"><span class="task-copy"><strong><code>stash</code>, <code>stash list</code>, <code>stash pop</code></strong><span>Stash an uncommitted change, switch branches, return, and restore it.</span></span><span class="task-time">40–60 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d4t4"><span class="task-copy"><strong><code>restore</code>, <code>revert</code>, and <code>reset</code></strong><span>Compare them in a disposable practice repo. Try <code>reset --soft</code> and <code>reset --mixed</code>.</span></span><span class="task-time">60–85 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d4t5"><span class="task-copy"><strong>Merge vs rebase</strong><span>Draw both commit graphs, then try <code>git rebase main</code> on a throwaway feature branch.</span></span><span class="task-time">85–105 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d4t6"><span class="task-copy"><strong><code>reflog</code> and recovery review</strong><span>Inspect recent HEAD movements and write down a safe way to undo a published commit.</span></span><span class="task-time">105–120 min</span></label>
+      </div>
+      <div class="deliverable"><strong>Deliverable:</strong> Notes explaining <code>restore</code> vs <code>revert</code> vs <code>reset</code>, and <code>fetch</code> vs <code>pull</code>.</div>
+    </section>
+
+    <section class="day" data-day="5">
+      <div class="day-head"><div class="day-no">05</div><div class="day-title"><h2>Professional workflow &amp; capstone</h2><p>Complete an Issue-to-Release workflow from start to finish.</p></div><div class="day-count">0 / 7</div></div>
+      <div class="tasks">
+        <label class="task"><input type="checkbox" data-id="d5t1"><span class="task-copy"><strong>Good commit messages and clean history</strong><span>Review your history and make commit messages specific and action-oriented.</span></span><span class="task-time">00–20 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d5t2"><span class="task-copy"><strong>README, license, and repository hygiene</strong><span>Improve documentation, review <code>.gitignore</code>, and check that no secrets are committed.</span></span><span class="task-time">20–40 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d5t3"><span class="task-copy"><strong>Tags and GitHub Releases</strong><span>Create an annotated <code>v1.0.0</code> tag, push it, and publish a GitHub Release.</span></span><span class="task-time">40–60 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d5t4"><span class="task-copy"><strong>Capstone: create an Issue</strong><span>Choose a small feature or improvement and define the expected result.</span></span><span class="task-time">60–70 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d5t5"><span class="task-copy"><strong>Capstone: branch, commit, and push</strong><span>Make two or three focused commits on a feature branch and push it.</span></span><span class="task-time">70–85 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d5t6"><span class="task-copy"><strong>Capstone: PR, review, merge, and pull</strong><span>Open a PR, review its diff, merge it, and synchronize local <code>main</code>.</span></span><span class="task-time">85–105 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d5t7"><span class="task-copy"><strong>Final audit and reflection</strong><span>Review Issues, PRs, branches, tags, commits, and write what to practice next.</span></span><span class="task-time">105–120 min</span></label>
+      </div>
+      <div class="deliverable"><strong>Deliverable:</strong> A polished GitHub repository with documentation, a merged PR workflow, and a <code>v1.0.0</code> release.</div>
+    </section>
+
+    <div class="callout"><strong>Safety rule:</strong> Practice destructive commands such as <code>reset --hard</code> and history rewriting only in a disposable repository. For a commit that has already been shared, <code>git revert</code> is usually the safer choice. Never commit passwords, API keys, tokens, or private data.</div>
+    <footer>Built for focused practice. Check off the work, not just the reading.</footer>
+  </main>
+  <script>
+    (() => {
+      const STORAGE_KEY = 'git-github-5-day-roadmap-v1';
+      const boxes = [...document.querySelectorAll('input[type="checkbox"][data-id]')];
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+      const progressTrack = document.getElementById('progressTrack');
+      const completedStat = document.getElementById('completedStat');
+
+      function readState() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+        catch { return {}; }
+      }
+      function saveState() {
+        const state = Object.fromEntries(boxes.map(box => [box.dataset.id, box.checked]));
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+        catch { /* The checklist remains usable for this page session if storage is unavailable. */ }
+      }
+      function update() {
+        const completed = boxes.filter(box => box.checked).length;
+        const total = boxes.length;
+        const percent = total ? Math.round(completed / total * 100) : 0;
+        progressBar.style.width = `${percent}%`;
+        progressText.textContent = `${percent}%`;
+        completedStat.textContent = `${completed} / ${total}`;
+        progressTrack.setAttribute('aria-valuenow', String(percent));
+        document.querySelectorAll('.day').forEach(day => {
+          const dayBoxes = [...day.querySelectorAll('input[type="checkbox"]')];
+          const count = dayBoxes.filter(box => box.checked).length;
+          day.querySelector('.day-count').textContent = `${count} / ${dayBoxes.length}`;
+          dayBoxes.forEach(box => box.closest('.task').classList.toggle('done', box.checked));
+        });
+      }
+
+      const saved = readState();
+      boxes.forEach(box => {
+        box.checked = saved[box.dataset.id] === true;
+        box.addEventListener('change', () => { saveState(); update(); });
+      });
+      update();
+
+      document.getElementById('resetBtn').addEventListener('click', () => {
+        if (!window.confirm('Reset all 30 checklist items? This cannot be undone.')) return;
+        boxes.forEach(box => { box.checked = false; });
+        saveState();
+        update();
+      });
+
+      document.getElementById('exportBtn').addEventListener('click', () => {
+        const payload = {
+          roadmap: 'Git & GitHub in 5 days',
+          exportedAt: new Date().toISOString(),
+          completed: boxes.filter(box => box.checked).length,
+          total: boxes.length,
+          tasks: Object.fromEntries(boxes.map(box => [box.dataset.id, box.checked]))
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = 'git-github-progress.json';
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+        URL.revokeObjectURL(url);
+      });
+    })();
+  </script>
+</body>
+</html>
